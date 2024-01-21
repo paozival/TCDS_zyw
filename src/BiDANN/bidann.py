@@ -70,6 +70,7 @@ class mynet(torch.nn.Module):
     def __init__(self):
         super(mynet, self).__init__()  ###复制并使用Net的父类的初始化方法，即先运行nn.Module的初始化函数
         self.lstm = LSTM(27,20)
+        self.emo_categories=3
         # 1x20x20 =>16x18x18
         self.conv1 = torch.nn.Conv2d(in_channels=1,
                                       out_channels=16,
@@ -99,14 +100,14 @@ class mynet(torch.nn.Module):
         self.class_classifier.add_module('c_fc2', nn.Linear(100, 100))
         self.class_classifier.add_module('c_bn2', nn.BatchNorm1d(100))
         self.class_classifier.add_module('c_relu2', nn.ReLU(True))
-        self.class_classifier.add_module('c_fc3', nn.Linear(100, 3))
+        self.class_classifier.add_module('c_fc3', nn.Linear(100, self.emo_categories))
 
 
         self.domain_classifier = nn.Sequential()
         self.domain_classifier.add_module('d_fc1', nn.Linear(16*3*3, 100))
         self.domain_classifier.add_module('d_bn1', nn.BatchNorm1d(100))
         self.domain_classifier.add_module('d_relu1', nn.ReLU(True))
-        self.domain_classifier.add_module('d_fc2', nn.Linear(100, 3))
+        self.domain_classifier.add_module('d_fc2', nn.Linear(100, 2))
 
 
         # self.linear1 = torch.nn.Linear(16*6, 2)

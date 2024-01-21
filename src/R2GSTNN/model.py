@@ -15,6 +15,7 @@ from grl import ReverseLayerF
 class R2GSTNN(nn.Module):
     def __init__(self, input_size):
         super(R2GSTNN, self).__init__()
+        self.emo_categories=3
         self.slstm1 = BiLSTM1(input_size)
         self.slstm2 = BiLSTM2(input_size)
         self.slstm3 = BiLSTM3(input_size)
@@ -49,7 +50,7 @@ class R2GSTNN(nn.Module):
         self.class_classifier.add_module('c_relu2', nn.ReLU(True))
         self.class_classifier.add_module('c_fc3', nn.Linear(50, 20))
         self.class_classifier.add_module('c_relu3', nn.ReLU(True))
-        self.class_classifier.add_module('c_fc4', nn.Linear(20, 2))
+        self.class_classifier.add_module('c_fc4', nn.Linear(20, self.emo_categories))
 
 
         self.domain_classifier = nn.Sequential()
