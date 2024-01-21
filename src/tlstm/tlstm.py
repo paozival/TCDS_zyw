@@ -25,10 +25,12 @@ class EEGLSTM(nn.Module):
 
     def __init__(self, num_class,
                  num_layer=1,
-                 input_channel=32,
+                 emo_categories=3,
+                 input_channel=62,
                  hidden_size=16):
         super(EEGLSTM, self).__init__()
         self.num_class = num_class
+        self.emo_categories=emo_categories
         self.num_layer = num_layer
         self.input_channel = input_channel
         self.hidden_size = hidden_size
@@ -42,7 +44,7 @@ class EEGLSTM(nn.Module):
         self.class_classifier.add_module('c_fc2', nn.Linear(200, 100))
         self.class_classifier.add_module('c_bn2', nn.BatchNorm1d(100))
         self.class_classifier.add_module('c_relu2', nn.ReLU(True))
-        self.class_classifier.add_module('c_fc3', nn.Linear(100, 2))
+        self.class_classifier.add_module('c_fc3', nn.Linear(100, self.emo_categories))
         self.class_classifier.add_module('c_softmax', nn.LogSoftmax(dim=1))
 
         self.domain_classifier = nn.Sequential()

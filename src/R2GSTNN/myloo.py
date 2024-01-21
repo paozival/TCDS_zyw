@@ -12,7 +12,7 @@ from sklearn.metrics import f1_score
 import random
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='DANN Training')
+    parser = argparse.ArgumentParser(description='R2GSTNN Training')
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
@@ -20,7 +20,7 @@ def parse_args():
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='x',
+                        default='gamma',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
@@ -64,7 +64,7 @@ def compute(model, data_loader):
         # data = data.unsqueeze(1).to(device)  #
         data = data.to(device)
         targets = targets.squeeze(1).to(device)
-        class_output,_ = model(data,alpha)
+        logits,class_output,_,_ = model(data,alpha)
         _, predicted_labels = torch.max(class_output, 1)
         # 计算精度,f1分数
         num_examples += targets.size(0)
@@ -93,7 +93,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # device = torch.device("cpu")
 
 # subject-independent loop
-for p_idx in range(0,1):
+for p_idx in range(0,num_of_subject):
 
     tr_p = list(range(0,num_of_subject))
     del tr_p[p_idx]
@@ -193,6 +193,7 @@ for p_idx in range(0,1):
     predict_list.append(test_predict)
     score_list.append(test_acc.cpu().numpy())
     target_list.append(test_target)
+    print(f"subject {p_idx+1} done.")
 
 ####### save f1_list predict_list score_list target_list
 score_list=np.array(score_list) # (15,)
@@ -200,15 +201,15 @@ f1_list=np.array(f1_list) # (15,)
 predict_result = np.empty(shape=(num_of_subject,predict_list[0].shape[0]),dtype=np.int32)
 target_result = np.empty(shape=(num_of_subject,target_list[0].shape[0]),dtype=np.int32)
 
-for i in range(1):
+for i in range(num_of_subject):
     predict_result[i,:] = predict_list[i]
     target_result[i,:] = target_list[i]
 
 
-print("check ")
+
 
 # save result
-save_name = f"{os.getcwd()}/results/{args.dataset}_{args.method}_{args.band_name}.npz"
+save_name = f"{os.getcwd()}/results/{args.dataset}/{args.method}_{args.band_name}.npz"
 
 # print("check save name")
 np.savez(save_name,score_list=score_list,f1_list=f1_list,\

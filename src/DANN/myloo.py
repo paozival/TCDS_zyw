@@ -40,11 +40,11 @@ def parse_args():
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
-                        default='D:/Projects/zhuyiwen_data/seed/',
+                        default=f"{os.getcwd()}/data/seed/",
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='x',
+                        default='gamma',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
@@ -184,10 +184,9 @@ for p_idx in range(0,num_of_subject):
     score_list.append(test_acc.cpu().numpy())
     target_list.append(test_target)
 
+    print(f"subject {p_idx+1} done.")
+
     
-
-
-
 ####### save f1_list predict_list score_list target_list
 score_list=np.array(score_list) # (15,)
 f1_list=np.array(f1_list) # (15,)
@@ -199,8 +198,10 @@ for i in range(num_of_subject):
     target_result[i,:] = target_list[i]
 
 
+
+
 # save result
-save_name = f"{os.getcwd()}/results/{args.dataset}_{args.method}_{args.band_name}.npz"
+save_name = f"{os.getcwd()}/results/{args.dataset}/{args.method}_{args.band_name}.npz"
 
 # print("check save name")
 np.savez(save_name,score_list=score_list,f1_list=f1_list,\
