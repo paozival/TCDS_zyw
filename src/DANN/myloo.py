@@ -40,7 +40,7 @@ def parse_args():
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
-                        default=f"{os.getcwd()}/data/seed/",
+                        default=f"{os.getcwd()}/data/seediv/",
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
@@ -49,7 +49,7 @@ def parse_args():
                         help='different frequency bands')
     parser.add_argument('--dataset',
                         type=str,
-                        default='seed',)
+                        default='seediv',)
     parser.add_argument('--batch_size',
                         type=int,
                         default=32,

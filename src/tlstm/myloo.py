@@ -19,7 +19,7 @@ def parse_args():
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='x',
+                        default='gamma',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
@@ -77,14 +77,14 @@ args=parse_args()
 num_of_subject=15
 emo_categories = 3
 
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# device = torch.device("cpu")
 
 
 
 
 # subject-independent loop
-for p_idx in range(0,1):
+for p_idx in range(0,num_of_subject):
 
     tr_p = list(range(0,num_of_subject))
     del tr_p[p_idx]
@@ -178,6 +178,7 @@ for p_idx in range(0,1):
     predict_list.append(test_predict)
     score_list.append(test_acc.cpu().numpy())
     target_list.append(test_target)
+    print(f"subject {p_idx+1} done.")
 
 ####### save f1_list predict_list score_list target_list
 score_list=np.array(score_list) # (15,)
@@ -185,19 +186,19 @@ f1_list=np.array(f1_list) # (15,)
 predict_result = np.empty(shape=(num_of_subject,predict_list[0].shape[0]),dtype=np.int32)
 target_result = np.empty(shape=(num_of_subject,target_list[0].shape[0]),dtype=np.int32)
 
-for i in range(1):
+for i in range(num_of_subject):
     predict_result[i,:] = predict_list[i]
     target_result[i,:] = target_list[i]
 
 
-# print("check ")
+
 
 save_name = f"{os.getcwd()}/results/{args.dataset}/{args.method}_{args.band_name}.npz"
 np.savez(save_name,score_list=score_list,f1_list=f1_list,\
          predict_result=predict_result,target_result=target_result)
 
 
-
+print("1 ")
 
 
 
