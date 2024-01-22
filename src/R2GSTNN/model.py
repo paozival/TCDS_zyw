@@ -15,7 +15,7 @@ from grl import ReverseLayerF
 class R2GSTNN(nn.Module):
     def __init__(self, input_size):
         super(R2GSTNN, self).__init__()
-        self.emo_categories=3
+        self.emo_categories=4
         self.slstm1 = BiLSTM1(input_size)
         self.slstm2 = BiLSTM2(input_size)
         self.slstm3 = BiLSTM3(input_size)

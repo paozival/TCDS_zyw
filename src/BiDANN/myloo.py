@@ -42,7 +42,7 @@ def parse_args():
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
-                        default=f"{os.getcwd()}/data/seed/",
+                        default=f"{os.getcwd()}/data/seediv/",
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
@@ -51,7 +51,7 @@ def parse_args():
                         help='different frequency bands')
     parser.add_argument('--dataset',
                         type=str,
-                        default='seed',)
+                        default='seediv',)
     parser.add_argument('--batch_size',
                         type=int,
                         default=32,
@@ -188,6 +188,7 @@ for i in range(num_of_subject):
     predict_result[i,:] = predict_list[i]
     target_result[i,:] = target_list[i]
 
+# print("check")
 
 save_name = f"{os.getcwd()}/results/{args.dataset}/{args.method}_{args.band_name}.npz"
 np.savez(save_name,score_list=score_list,f1_list=f1_list,\

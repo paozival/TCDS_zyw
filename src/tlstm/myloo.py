@@ -19,7 +19,7 @@ def parse_args():
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='gamma',
+                        default='x',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
@@ -75,7 +75,7 @@ score_list,f1_list = [],[]
 predict_list, target_list=[],[]
 args=parse_args()
 num_of_subject=15
-emo_categories = 3
+emo_categories = 4
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # device = torch.device("cpu")

@@ -70,7 +70,7 @@ class mynet(torch.nn.Module):
     def __init__(self):
         super(mynet, self).__init__()  ###复制并使用Net的父类的初始化方法，即先运行nn.Module的初始化函数
         self.lstm = LSTM(27,20)
-        self.emo_categories=3
+        self.emo_categories=4
         # 1x20x20 =>16x18x18
         self.conv1 = torch.nn.Conv2d(in_channels=1,
                                       out_channels=16,

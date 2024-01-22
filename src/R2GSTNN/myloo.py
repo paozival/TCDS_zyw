@@ -16,16 +16,16 @@ def parse_args():
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
-                        default=f"{os.getcwd()}/data/seed/",
+                        default=f"{os.getcwd()}/data/seediv/",
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='gamma',
+                        default='alpha',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
                         type=str,
-                        default='seed',)
+                        default='seediv',)
     parser.add_argument('--batch_size',
                         type=int,
                         default=32,
@@ -204,8 +204,6 @@ target_result = np.empty(shape=(num_of_subject,target_list[0].shape[0]),dtype=np
 for i in range(num_of_subject):
     predict_result[i,:] = predict_list[i]
     target_result[i,:] = target_list[i]
-
-
 
 
 # save result

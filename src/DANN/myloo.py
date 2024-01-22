@@ -44,7 +44,7 @@ def parse_args():
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='gamma',
+                        default='x',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
