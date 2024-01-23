@@ -23,13 +23,13 @@ class GradientReverseFunction(Function):
 
 class EEGLSTM(nn.Module):
 
-    def __init__(self, num_class,
+    def __init__(self, 
                  num_layer=1,
                  emo_categories=3,
                  input_channel=62,
                  hidden_size=16):
         super(EEGLSTM, self).__init__()
-        self.num_class = num_class
+        # self.num_class = num_class
         self.emo_categories=emo_categories
         self.num_layer = num_layer
         self.input_channel = input_channel

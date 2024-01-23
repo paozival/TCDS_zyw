@@ -15,16 +15,16 @@ def parse_args():
     parser.add_mutually_exclusive_group()
     parser.add_argument('--file_dir',
                         type=str,
-                        default=f"{os.getcwd()}/data/seed/",
+                        default=f"{os.getcwd()}/data/seediv/",
                         help='Feature set root path')
     parser.add_argument('--band_name',
                         type=str,
-                        default='x',
+                        default='beta',
                         choices=['x', 'theta', 'beta', 'alpha', 'gamma'],
                         help='different frequency bands')
     parser.add_argument('--dataset',
                         type=str,
-                        default='seed',)
+                        default='seediv',)
     parser.add_argument('--batch_size',
                         type=int,
                         default=32,
@@ -129,7 +129,7 @@ for p_idx in range(0,num_of_subject):
     len_loader = len(tr_loader)
 
     # define model , loss, optimizer
-    model = EEGLSTM(num_class=emo_categories,input_channel=62).to(device)
+    model = EEGLSTM(emo_categories=emo_categories,input_channel=62).to(device)
     loss_class=torch.nn.CrossEntropyLoss()
     loss_domain=torch.nn.CrossEntropyLoss()
 
